@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Axios from 'axios';
 // import { useNavigate } from "react-router-dom";
+import styles from "../../styles/gameDice.module.css";
 import { Button } from 'reactstrap';
+
 import dice1 from '../../assets/images/dice1.svg';
 import dice2 from '../../assets/images/dice2.svg';
 import dice3 from '../../assets/images/dice3.svg';
@@ -9,7 +11,6 @@ import dice4 from '../../assets/images/dice4.svg';
 import dice5 from '../../assets/images/dice5.svg';
 import dice6 from '../../assets/images/dice6.svg';
 
-import '../../styles/gameDice.module.css';
 
 function Dices() {
   const [id, setId] = useState('');
@@ -45,7 +46,7 @@ function Dices() {
   };
 
   const handleBackClick = () => {
-    navigate("/gamelist"); // Specify the desired path here
+    window.location.replace('gamelist') // Specify the desired path here
   };
 
   const updateScores = async () => {
@@ -87,13 +88,13 @@ function Dices() {
       }
     } catch (error) {
       console.log("Internal Server Error !");
-      navigate('/login'); // Ganti dengan useNavigate()
+      window.location.replace('login')
     }
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <>
@@ -102,27 +103,27 @@ function Dices() {
           Kembali
         </Button>
       </div>
-    <div className='center-container'>
-      <div className='dice-wrapper '>
-        <div className='dice-area'>
+    <div className={styles.centerContainer}>
+      <div className={styles.diceWrapper}>
+        <div className={styles.diceArea}>
           <p>{username}</p>
-          <img src={dice1} ref={playerRef} alt='Dice' />
+          <img src={diceImages[0]} ref={playerRef} alt='Dice' />
         </div>
         <div>
           <p>Score: {scores}</p>
         </div>
-        <div className='dice-area'>
+        <div className={styles.diceArea}>
           <p>Computer</p>
-          <img src={dice1} ref={computerRef} alt='Dice' />
+          <img src={diceImages[0]} ref={computerRef} alt='Dice' />
         </div>
       </div>
-      <div className='dice-wrapper'>
+      <div className={styles.diceWrapper}>
       <p className='result' ref={resultDice}>
         {result}
       </p>
       </div>
-      <div className='dice-wrapper'>
-      <button onClick={roll} className='btn'>
+      <div className={styles.diceWrapper}>
+      <button onClick={roll} className={styles.btn}>
         Roll the dice
       </button>
       </div>

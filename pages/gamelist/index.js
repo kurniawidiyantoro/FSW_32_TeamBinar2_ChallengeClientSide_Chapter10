@@ -28,27 +28,27 @@ const GameList = () => {
     },
   ];
 
-  // const checkToken = async () => {
-  //   const token = localStorage.getItem('token');
-  //   const email = localStorage.getItem('email');
-  //   console.log(token);
-  //   console.log(email);
-  //   try {
-  //     if (!token) {
-  //       console.log('Not Authorized!');
-  //       window.location.replace('/login');
-  //     } else {
-  //       console.log('Authorized !')
-  //     }
-  //   } catch (error) {
-  //     console.log('Internal Server Error!');
-  //     window.location.replace('/login');
-  //   }
-  // };
+  const checkToken = async () => {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+    console.log(token);
+    console.log(email);
+    try {
+      if (!token) {
+        console.log('Not Authorized!');
+        window.location.replace('/login');
+      } else {
+        console.log('Authorized !')
+      }
+    } catch (error) {
+      console.log('Internal Server Error!');
+      window.location.replace('/login');
+    }
+  };
 
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const handleClick = (path) => {
     // navigate(path);

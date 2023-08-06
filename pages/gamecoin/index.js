@@ -121,14 +121,17 @@ const CoinFlipGame = () => {
           Kembali
         </Button>
       </div>
-      <div className='container'>
-        <div className={`coin ${isFlipping ? 'flipping' : ''}`} onAnimationEnd={() => setIsFlipping(false)}>
-          <div className={`heads ${coinSide === "heads" && headsImgLoaded ? 'show' : ''}`}>
-            <img src={'/images/coin.jpg'} alt="Heads" onLoad={handleHeadsImgLoad} />
-          </div>
-          <div className={`tails ${coinSide === "tails" && tailsImgLoaded ? 'show' : ''}`}>
-            <img src={coinTailsImg} alt="Tails" onLoad={handleTailsImgLoad} />
-          </div>
+      <div className={styles.container}>
+        <div
+          className={`${styles.coin} ${isFlipping ? styles.flipping : ""}`}
+          onAnimationEnd={() => setIsFlipping(false)}
+          >  
+            <div className={`${styles.heads} ${coinSide === "heads" && headsImgLoaded ? styles.show : ""}`}>
+              <img src={'/images/coin.jpg'} alt="Heads" onLoad={handleHeadsImgLoad} />
+            </div>
+            <div className={`${styles.tails} ${coinSide === "tails" && tailsImgLoaded ? styles.show : ""}`}>
+              <img src={'/images/coin2.jpg'} alt="Tails" onLoad={handleTailsImgLoad} />
+            </div>
         </div>
         <div className={styles.stats}>
           <p>Player: {username}</p>

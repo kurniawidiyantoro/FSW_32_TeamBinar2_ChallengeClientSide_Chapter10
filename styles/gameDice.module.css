@@ -1,11 +1,11 @@
-.dice-wrapper {
+.diceWrapper {
     width: 90%;
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
   
-  .dice-area {
+  .diceArea {
     text-align: center;
   }
   
@@ -41,7 +41,7 @@
     font-size: 1.6rem;
   }
 
-  .center-container {
+  .centerContainer {
     display: grid;
     justify-content: center;
     align-items: center;
