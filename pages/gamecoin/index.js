@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Button } from 'reactstrap';
-import { useNavigate } from "react-router-dom";
-import '../../styles/gameCoin.css';
+// import { useNavigate } from "react-router-dom";
+import styles from "../../styles/gameCoin.module.css";
 import coinHeadsImg from '../../assets/images/coin.jpg';
 import coinTailsImg from '../../assets/images/coin2.jpg';
 
@@ -16,7 +16,7 @@ const CoinFlipGame = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [headsImgLoaded, setHeadsImgLoaded] = useState(false);
   const [tailsImgLoaded, setTailsImgLoaded] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleHeadsImgLoad = () => {
     setHeadsImgLoaded(true);
@@ -58,7 +58,7 @@ const CoinFlipGame = () => {
   };
   
   const handleBackClick = () => {
-    navigate("/gamelist"); 
+    window.location.replace('gamelist') 
   };
 
   const handleGuessAgain = () => {
@@ -89,7 +89,7 @@ const CoinFlipGame = () => {
     try {
       if (!token) {
         console.log('Not Authorize !');
-        navigate('/login'); // Ganti dengan useNavigate()
+        window.location.replace('login')
       } else {
         const response = await Axios.post('http://localhost:3005/usergame/get',
           { email },
@@ -124,26 +124,26 @@ const CoinFlipGame = () => {
       <div className='container'>
         <div className={`coin ${isFlipping ? 'flipping' : ''}`} onAnimationEnd={() => setIsFlipping(false)}>
           <div className={`heads ${coinSide === "heads" && headsImgLoaded ? 'show' : ''}`}>
-            <img src={coinHeadsImg} alt="Heads" onLoad={handleHeadsImgLoad} />
+            <img src={'/images/coin.jpg'} alt="Heads" onLoad={handleHeadsImgLoad} />
           </div>
           <div className={`tails ${coinSide === "tails" && tailsImgLoaded ? 'show' : ''}`}>
             <img src={coinTailsImg} alt="Tails" onLoad={handleTailsImgLoad} />
           </div>
         </div>
-        <div className="stats">
+        <div className={styles.stats}>
           <p>Player: {username}</p>
           <p>Scores: {scores}</p>
         </div>
-        <div className="buttons">
+        <div className={styles.buttons}>
           <Button
-            className="guess-button"
+            className={styles.guessButton}
             onClick={() => handleGuess("heads")}
             disabled={isFlipping || coinSide}
           >
             Heads
           </Button>
           <Button
-            className="guess-button"
+            className={styles.guessButton}
             onClick={() => handleGuess("tails")}
             disabled={isFlipping || coinSide}
           >

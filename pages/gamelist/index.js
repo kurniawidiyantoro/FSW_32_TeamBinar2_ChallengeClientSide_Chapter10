@@ -28,27 +28,27 @@ const GameList = () => {
     },
   ];
 
-  const checkToken = async () => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-    console.log(token);
-    console.log(email);
-    try {
-      if (!token) {
-        console.log('Not Authorized!');
-        window.location.replace('/login');
-      } else {
-        console.log('Authorized !')
-      }
-    } catch (error) {
-      console.log('Internal Server Error!');
-      window.location.replace('/login');
-    }
-  };
+  // const checkToken = async () => {
+  //   const token = localStorage.getItem('token');
+  //   const email = localStorage.getItem('email');
+  //   console.log(token);
+  //   console.log(email);
+  //   try {
+  //     if (!token) {
+  //       console.log('Not Authorized!');
+  //       window.location.replace('/login');
+  //     } else {
+  //       console.log('Authorized !')
+  //     }
+  //   } catch (error) {
+  //     console.log('Internal Server Error!');
+  //     window.location.replace('/login');
+  //   }
+  // };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   const handleClick = (path) => {
     // navigate(path);
@@ -72,6 +72,7 @@ const GameList = () => {
       <div className="py-12 md:py-20">
         {/* Section header */}
         <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+          <h2 className={styles.featureTitle}>Selamat datang</h2>
           <h2 className={styles.featureTitle}>Game List</h2>
           <p className={styles.featureDescription}>
             Berbagai permainan yang bisa anda mainkan di website kami
@@ -79,36 +80,28 @@ const GameList = () => {
         </div>
 
         {/* Items */}
-        <div className="mderw-sm mx-auto flex flex-wrap gap-8 md:max-w-2xl lg:max-w-none">
+        <div className={styles.mderwSm}>
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="rectangle-item"
-              style={{ backgroundImage: `url(${item.backgroundImage})` }}
-              data-aos="fade-up"
-            >
-              <div className="rectangle-item-content">
-                <svg
-                  className="w-12 h-12 mb-4"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* SVG code */}
-                </svg>
-                <h4 style={textTitle}>{item.title}</h4>
-                <p style={textDescription}>
-                  {item.description}
-                </p>
-                <div>
+             <div
+             key={index}
+             className={styles.rectangleItem}
+             style={{ backgroundImage: `url(${item.backgroundImage})` }}
+             data-aos="fade-up"
+           >
+             <div className={styles.rectangleItemContent}>
+               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                 {/* Add SVG content here if needed */}
+               </svg>
+               <h2 className={`h4 mb-2`}>{item.title}</h2>
+               <p>{item.description}</p>
                   <Button
                     color="primary"
                     onClick={() => handleClick(item.path)}
                   >
                     Play
                   </Button>
-                </div>
-              </div>
-            </div>
+             </div>
+           </div>
           ))}
         </div>
       </div>

@@ -9,11 +9,11 @@
     text-align: center;
   }
   
-  h2 {
+  .h2 {
     margin: 2rem 0;
   }
   
-  p {
+  .p {
     font-size: 1.6rem;
     margin: 3rem 0;
   }
@@ -36,7 +36,7 @@
     color: #836fa9;
   }
   
-  ul {
+  .ul {
     list-style: none;
     font-size: 1.6rem;
   }

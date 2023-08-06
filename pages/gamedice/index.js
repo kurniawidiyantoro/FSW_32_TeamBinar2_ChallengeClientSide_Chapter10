@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
 import dice1 from '../../assets/images/dice1.svg';
 import dice2 from '../../assets/images/dice2.svg';
@@ -9,7 +9,7 @@ import dice4 from '../../assets/images/dice4.svg';
 import dice5 from '../../assets/images/dice5.svg';
 import dice6 from '../../assets/images/dice6.svg';
 
-import '../../styles/gameDice.css';
+import '../../styles/gameDice.module.css';
 
 function Dices() {
   const [id, setId] = useState('');
@@ -20,7 +20,7 @@ function Dices() {
   const playerRef = useRef(null);
   const computerRef = useRef(null);
   const resultDice = useRef(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   let diceImages = [dice1, dice2, dice3, dice4, dice5, dice6];
 

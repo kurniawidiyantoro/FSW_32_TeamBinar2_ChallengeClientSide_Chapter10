@@ -6,10 +6,10 @@ import Features from './feature';
 import Footer from "./components/footer";
 
 function HomePage() {
-  useEffect(() => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-  }, []);
+  // useEffect(() => {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('email');
+  // }, []);
 
   return (
     <div>
