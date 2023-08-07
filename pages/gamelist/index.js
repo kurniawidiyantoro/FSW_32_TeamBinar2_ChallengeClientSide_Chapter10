@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-// import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 import { Button } from "reactstrap";
 import NavbarUser from "../components/navbarUser";
 import styles from "../../styles/feature.module.css";
 
 const GameList = () => {
-  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); 
 
   const items = [
     {
@@ -51,20 +50,20 @@ const GameList = () => {
   }, []);
 
   const handleClick = (path) => {
-    // navigate(path);
+    setLoading(true); 
     console.log(path);
     window.location.replace(path);
   };
-  
+
   const textTitle = {
     fontSize: '21px',
     textAlign: 'center'
-  }
+  };
 
   const textDescription = {
     fontSize: '16px',
     textAlign: 'center'
-  }
+  };
 
   return (
     <div className={styles.FeaturePageImage}>
@@ -103,8 +102,9 @@ const GameList = () => {
                   <Button
                     color="primary"
                     onClick={() => handleClick(item.path)}
+                    disabled={loading} 
                   >
-                    Play
+                    {loading ? "Processing" : "Play"}
                   </Button>
                 </div>
               </div>
