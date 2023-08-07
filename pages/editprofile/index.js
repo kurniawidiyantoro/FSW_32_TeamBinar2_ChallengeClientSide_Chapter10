@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Alert } from 'reactstrap';
 import styles from '../../styles/editprofile.module.css'
+import Spinner from 'react-bootstrap/Spinner';
 
 const EditProfilePage = () => {
   const [hideAlert, setHideAlert] = useState(true);
@@ -12,6 +13,8 @@ const EditProfilePage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const checkToken = async () => {
     const token = localStorage.getItem('token');
@@ -81,6 +84,7 @@ const EditProfilePage = () => {
 
   const editProfileApi = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const token = localStorage.getItem("token");
     try {
         const response = await Axios.post("http://localhost:3005/usergame/update/profile",
@@ -101,10 +105,13 @@ const EditProfilePage = () => {
         setAlertMessage(response.data.status);
         setHideAlert(false);
         localStorage.setItem('email', response.data.newData.email);
+        setUpdateSuccess(true);
     } catch (error) {
         setColorMessage('danger');
         setAlertMessage(error.response.data.message);
         setHideAlert(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -143,16 +150,27 @@ const EditProfilePage = () => {
           <br></br>
           <Button
             color="primary"
-            style={{ width: '100%' }} // Set the button width to 100%
+            block
+            style={{ width: '100%' }}
             onClick={editProfileApi}
+            disabled={loading || updateSuccess}
           >
-            Update Profile          
+            {loading ? (
+              <>
+                <Spinner animation="border" size="sm" className="mr-2" />
+                Processing
+              </>
+            ) : updateSuccess ? (
+              'Done'
+            ) : (
+              'Edit Profile'
+            )}
           </Button>
           <br></br>
           <br></br>
           <Button
             color="primary"
-            style={{ width: '100%' }} // Set the button width to 100%
+            style={{ width: '100%' }} 
             onClick={redirectEditPassword}
           >
             Change Password         
@@ -161,7 +179,7 @@ const EditProfilePage = () => {
           <br></br>
           <Button
             color="primary"
-            style={{ width: '100%' }} // Set the button width to 100%
+            style={{ width: '100%' }} 
             onClick={redirectGameList}
           >
             Back
