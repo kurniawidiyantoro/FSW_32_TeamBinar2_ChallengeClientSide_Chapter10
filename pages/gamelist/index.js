@@ -71,7 +71,7 @@ const GameList = () => {
       <NavbarUser />
       <div className="py-12 md:py-20">
         {/* Section header */}
-        <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+        <div className="text-center">
           <h2 className={styles.featureTitle}>Selamat datang</h2>
           <h2 className={styles.featureTitle}>Game List</h2>
           <p className={styles.featureDescription}>
