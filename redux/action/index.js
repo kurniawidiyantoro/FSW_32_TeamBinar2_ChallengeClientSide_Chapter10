@@ -1,20 +1,63 @@
-export function ubahWarna(warna) {
+import Axios from 'axios';
+
+
+export function loginRequest(){
   return {
-    type: 'MENGUBAH_WARNA',
-    payload: warna
+    type: 'LOGIN_REQUEST'
   }
+ };
+
+ export function loginSuccess (token, email) {
+  return{
+  type: 'LOGIN_SUCCESS',
+  payload: { token, email },
+}};
+
+export function loginFailure (error){
+  return{
+    type: 'LOGIN_FAILURE',
+    payload: error,
+  }  
+};
+
+export function setEmail(email) {
+  return {
+    type: 'SET_EMAIL',
+    payload: email,
+  };
 }
 
-export function ubahUmur(umur) {
-  return {
-    type: 'MENGUBAH_UMUR',
-    payload: umur
-  }
-}
+export const setLoggedIn = (isLoggedIn, user) => ({
+  type: 'SET_LOGGED_IN',
+  payload: { isLoggedIn, user },
+});
 
-export function ubahNama(nama) {
-  return {
-    type: 'MENGUBAH_NAMA',
-    payload: nama
+export const setPlayedGames = (games) => ({
+  type: 'SET_PLAYED_GAMES',
+  payload: games,
+});
+
+// Async Action to perform login
+export const loginUser = (email, password) => async (dispatch) => {
+  dispatch(loginRequest());
+
+  try {
+    const response = await Axios.post('http://localhost:3005/login', {
+      email,
+      password,
+    });
+
+    const { token, email: userEmail } = response.data;
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('email', userEmail);
+
+    dispatch(loginSuccess(token, userEmail));
+    dispatch(setEmail(userEmail));
+  } catch (error) {
+    const errorMessage = error.response ? error.response.data.message : 'An error occurred';
+    dispatch(loginFailure(errorMessage));
   }
-}
+};
+
+
