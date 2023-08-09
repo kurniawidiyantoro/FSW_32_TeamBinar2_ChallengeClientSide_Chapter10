@@ -92,9 +92,9 @@ function Dices() {
     }
   };
 
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>

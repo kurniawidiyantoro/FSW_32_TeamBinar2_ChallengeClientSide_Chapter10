@@ -1,22 +1,40 @@
 import Axios from 'axios';
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-// Action Creators
-export const loginRequest = () => ({
-  type: LOGIN_REQUEST,
-});
+export function loginRequest(){
+  return {
+    type: 'LOGIN_REQUEST'
+  }
+ };
 
-export const loginSuccess = (token, email) => ({
-  type: LOGIN_SUCCESS,
+ export function loginSuccess (token, email) {
+  return{
+  type: 'LOGIN_SUCCESS',
   payload: { token, email },
+}};
+
+export function loginFailure (error){
+  return{
+    type: 'LOGIN_FAILURE',
+    payload: error,
+  }  
+};
+
+export function setEmail(email) {
+  return {
+    type: 'SET_EMAIL',
+    payload: email,
+  };
+}
+
+export const setLoggedIn = (isLoggedIn, user) => ({
+  type: 'SET_LOGGED_IN',
+  payload: { isLoggedIn, user },
 });
 
-export const loginFailure = (error) => ({
-  type: LOGIN_FAILURE,
-  payload: error,
+export const setPlayedGames = (games) => ({
+  type: 'SET_PLAYED_GAMES',
+  payload: games,
 });
 
 // Async Action to perform login
@@ -35,9 +53,11 @@ export const loginUser = (email, password) => async (dispatch) => {
     localStorage.setItem('email', userEmail);
 
     dispatch(loginSuccess(token, userEmail));
-    
+    dispatch(setEmail(userEmail));
   } catch (error) {
     const errorMessage = error.response ? error.response.data.message : 'An error occurred';
     dispatch(loginFailure(errorMessage));
   }
 };
+
+

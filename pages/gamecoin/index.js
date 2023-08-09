@@ -3,8 +3,6 @@ import Axios from 'axios';
 import { Button } from 'reactstrap';
 // import { useNavigate } from "react-router-dom";
 import styles from "../../styles/gameCoin.module.css";
-import coinHeadsImg from '../../assets/images/coin.jpg';
-import coinTailsImg from '../../assets/images/coin2.jpg';
 
 const CoinFlipGame = () => {
   const [id, setId] = useState('');
@@ -106,7 +104,7 @@ const CoinFlipGame = () => {
       }
     } catch (error) {
       console.log("Internal Server Error !");
-      navigate('/login'); // Ganti dengan useNavigate()
+      window.location.replace('login')
     }
   };
 

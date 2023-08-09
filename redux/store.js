@@ -1,15 +1,9 @@
-import { legacy_createStore, applyMiddleware } from 'redux';
+import { legacy_createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducer/reducers'; // Import the root reducer you'll create later
-
-const initialState = {}; // Define your initial state here
+import { reducer } from "./reducer"; 
 
 
-
-const store = legacy_createStore(
-  rootReducer,
-  initialState,
-  applyMiddleware(thunk)
-);
+const reducers = combineReducers({ reducer });
+const store = legacy_createStore(reducers, applyMiddleware(thunk));
 
 export default store;

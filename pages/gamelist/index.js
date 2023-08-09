@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 // import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
+import Navbar from "../components/navbar";
 import NavbarUser from "../components/navbarUser";
 import styles from "../../styles/feature.module.css";
+import { connect, useDispatch } from 'react-redux';
+import { setEmail } from "../../redux/action";
 
-const GameList = () => {
-  // const navigate = useNavigate();
+const GameList = ({ isLoggedIn, user }) => {
+  const dispatch = useDispatch();
 
   const items = [
     {
@@ -47,6 +50,8 @@ const GameList = () => {
   };
 
   useEffect(() => {
+    const email = localStorage.getItem('email');
+    dispatch(setEmail(email));
     checkToken();
   }, []);
 
@@ -56,19 +61,9 @@ const GameList = () => {
     window.location.replace(path);
   };
   
-  const textTitle = {
-    fontSize: '21px',
-    textAlign: 'center'
-  }
-
-  const textDescription = {
-    fontSize: '16px',
-    textAlign: 'center'
-  }
-
   return (
     <div className={styles.FeaturePageImage}>
-      <NavbarUser />
+      <NavbarUser isLoggedIn={isLoggedIn} userEmail={user.email}/>
       <div className="py-12 md:py-20">
         {/* Section header */}
         <div className="text-center">
@@ -109,4 +104,9 @@ const GameList = () => {
   );
 };
 
-export default GameList;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.reducer.isLoggedIn,
+  user: state.reducer.user,
+});
+
+export default connect(mapStateToProps)(GameList);

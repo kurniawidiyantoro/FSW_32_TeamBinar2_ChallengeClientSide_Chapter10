@@ -1,22 +1,35 @@
 import React from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
-function Example(args) {
+function Example({ isLoggedIn, userEmail }) {
   return (
     <div>
-      <Navbar {...args} color="dark" dark expand="md">
-        <NavbarBrand href="/" className="ps-3">Team 2</NavbarBrand>
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand href="/" className="ps-3">
+          {isLoggedIn ? `Welcome, ${userEmail}` : 'Team 2'}
+        </NavbarBrand>
         <Nav className="ms-auto" navbar>
-          <NavItem>
-            <NavLink href="/register">Register</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/login" className="pe-3">Login</NavLink>
-          </NavItem>
+          {isLoggedIn ? (
+              <>
+                <NavLink href="/editprofile">Edit Profile</NavLink>
+                <NavLink href="/logout">Logout</NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink href="/register">Register</NavLink>
+                <NavLink href="/login">Login</NavLink>
+              </>
+            )}
         </Nav>
       </Navbar>
     </div>
   );
 }
 
-export default Example;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.reducer.isLoggedIn,
+  userEmail: state.reducer.email || '', 
+});
+
+export default connect(mapStateToProps)(Example);
