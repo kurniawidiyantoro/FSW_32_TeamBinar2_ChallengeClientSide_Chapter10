@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import styles from '../../styles/LoginPage.module.css';
+import { setLoggedIn } from '../../redux/action';
+import { connect } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 
-const LoginPage = () => {
+
+const LoginPage = ({ setLoggedIn }) => {
   const [hideAlert, setHideAlert] = useState(true);
   const [alertMessage, setAlertMessage] = useState('');
   const [loading, setLoading] = useState(false); 
@@ -29,8 +32,9 @@ const LoginPage = () => {
       });
       console.log(response.data.email);
       console.log(response.data.token);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('email', response.data.email);
+      localStorage.setItem('token', response.data.token); //to get data use command => localStorage.getItem('token')
+      localStorage.setItem('email', response.data.email); //to get data use command => localStorage.getItem('email')
+      setLoggedIn(true, { email: response.data.email });
       window.location.replace('/gamelist');
     } catch (error) {
       setAlertMessage(error.response.data.message);
@@ -40,6 +44,7 @@ const LoginPage = () => {
     }
   };
 
+ 
   return (
     <div className={styles.HomePageImage}>
       <h2 className={styles.textH2}>LOGIN</h2>
@@ -92,4 +97,10 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+
+const mapDispatchToProps = {
+  setLoggedIn,
+};
+
+
+export default connect(null, mapDispatchToProps)(LoginPage);

@@ -21,8 +21,10 @@
 .mderwSm {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    gap: 8px;
+    max-width: 2xl;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
   
 .rectangleItem {
@@ -36,7 +38,7 @@
     position: relative;
 }
   
-.rectangleItemBefore {
+.rectangleItem::before {
     content: "";
     position: absolute;
     top: 0;
@@ -54,4 +56,16 @@
     text-align: center;
     color: #fff;
 }
+    
+  @media (min-width: 768px) {
+    .mderw-sm {
+      max-width: 2xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .mderw-sm {
+      max-width: none;
+    }
+  }
   

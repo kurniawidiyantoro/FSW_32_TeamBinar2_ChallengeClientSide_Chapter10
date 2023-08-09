@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "reactstrap";
+import Navbar from "../components/navbar";
 import NavbarUser from "../components/navbarUser";
 import styles from "../../styles/feature.module.css";
+import { connect, useDispatch } from 'react-redux';
+import { setEmail } from "../../redux/action";
 
-const GameList = () => {
+
+const GameList = ({ isLoggedIn, user }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false); 
+
 
   const items = [
     {
@@ -46,6 +52,8 @@ const GameList = () => {
   };
 
   useEffect(() => {
+    const email = localStorage.getItem('email');
+    dispatch(setEmail(email));
     checkToken();
   }, []);
 
@@ -54,6 +62,7 @@ const GameList = () => {
     console.log(path);
     window.location.replace(path);
   };
+
 
   const textTitle = {
     fontSize: '21px',
@@ -65,12 +74,14 @@ const GameList = () => {
     textAlign: 'center'
   };
 
+
   return (
     <div className={styles.FeaturePageImage}>
-      <NavbarUser />
+      <NavbarUser isLoggedIn={isLoggedIn} userEmail={user.email}/>
       <div className="py-12 md:py-20">
         {/* Section header */}
-        <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+        <div className="text-center">
+          <h2 className={styles.featureTitle}>Selamat datang</h2>
           <h2 className={styles.featureTitle}>Game List</h2>
           <p className={styles.featureDescription}>
             Berbagai permainan yang bisa anda mainkan di website kami
@@ -78,27 +89,20 @@ const GameList = () => {
         </div>
 
         {/* Items */}
-        <div className="mderw-sm mx-auto flex flex-wrap gap-8 md:max-w-2xl lg:max-w-none">
+        <div className={styles.mderwSm}>
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="rectangle-item"
-              style={{ backgroundImage: `url(${item.backgroundImage})` }}
-              data-aos="fade-up"
-            >
-              <div className="rectangle-item-content">
-                <svg
-                  className="w-12 h-12 mb-4"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* SVG code */}
-                </svg>
-                <h4 style={textTitle}>{item.title}</h4>
-                <p style={textDescription}>
-                  {item.description}
-                </p>
-                <div>
+             <div
+             key={index}
+             className={styles.rectangleItem}
+             style={{ backgroundImage: `url(${item.backgroundImage})` }}
+             data-aos="fade-up"
+           >
+             <div className={styles.rectangleItemContent}>
+               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                 {/* Add SVG content here if needed */}
+               </svg>
+               <h2 className={`h4 mb-2`}>{item.title}</h2>
+               <p>{item.description}</p>
                   <Button
                     color="primary"
                     onClick={() => handleClick(item.path)}
@@ -106,9 +110,8 @@ const GameList = () => {
                   >
                     {loading ? "Processing" : "Play"}
                   </Button>
-                </div>
-              </div>
-            </div>
+             </div>
+           </div>
           ))}
         </div>
       </div>
@@ -116,4 +119,11 @@ const GameList = () => {
   );
 };
 
-export default GameList;
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.reducer.isLoggedIn,
+  user: state.reducer.user,
+});
+
+export default connect(mapStateToProps)(GameList);
+

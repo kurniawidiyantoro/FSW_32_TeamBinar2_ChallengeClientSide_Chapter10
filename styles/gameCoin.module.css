@@ -1,11 +1,11 @@
-*{
+/* *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: "Rubik",sans-serif;
-}
+} */
 
-body{
+.body{
     height: 100%;
     background-color: #1f5a82;
 }
@@ -77,7 +77,7 @@ body{
     display: flex;
     justify-content: space-between;
 }
-button{
+.button{
     width: 150px;
     padding: 15px 0;
     border: none;
@@ -99,7 +99,7 @@ button{
     color: white;
 }
 
-.guess-button {
+.guessButton {
     background-color: #53a9ff;
     color: #ffffff;
 }
