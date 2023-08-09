@@ -1,27 +1,30 @@
-import Link from 'next/link'
+import Link from 'next/link';
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import styles from '../../styles/LoginPage.module.css';
 import { setLoggedIn } from '../../redux/action';
 import { connect } from 'react-redux';
+import Spinner from 'react-bootstrap/Spinner';
+
 
 const LoginPage = ({ setLoggedIn }) => {
   const [hideAlert, setHideAlert] = useState(true);
   const [alertMessage, setAlertMessage] = useState('');
-
+  const [loading, setLoading] = useState(false); 
   const [payload, setPayLoad] = useState({
-      email: '',
-      password: '',
-  })
+    email: '',
+    password: '',
+  });
 
   function handleChange(value) {
-      console.log(value);
-      setPayLoad({ ...payload, ...value })
+    console.log(value);
+    setPayLoad({ ...payload, ...value });
   }
 
   const loginApi = async (event) => {
     event.preventDefault();
+    setLoading(true); 
     try {
       const response = await Axios.post("http://localhost:3005/login", {
         email: payload.email,
@@ -34,13 +37,12 @@ const LoginPage = ({ setLoggedIn }) => {
       setLoggedIn(true, { email: response.data.email });
       window.location.replace('/gamelist');
     } catch (error) {
-        // console.log('error', error);
-        // setAlertMessage('Invalid Email or Password !');
-        // setHideAlert(false);
-        setAlertMessage(error.response.data.message);
-        setHideAlert(false);
+      setAlertMessage(error.response.data.message);
+      setHideAlert(false);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
  
   return (
@@ -59,9 +61,7 @@ const LoginPage = ({ setLoggedIn }) => {
               className={styles.input}
               type="email"
               value={payload.email}
-              onChange={function(event) {
-                handleChange({ email: event.target.value })
-              }}
+              onChange={(event) => handleChange({ email: event.target.value })}
             />
           </FormGroup>
           <FormGroup id="formBasicPassword">
@@ -70,18 +70,24 @@ const LoginPage = ({ setLoggedIn }) => {
               className={styles.input}
               type="password"
               value={payload.password}
-              onChange={function(event) {
-                handleChange({ password: event.target.value })
-              }}
+              onChange={(event) => handleChange({ password: event.target.value })}
             />
           </FormGroup>
           <br></br>
           <Button 
             color="primary" 
             onClick={loginApi}
-            style={{ width: '100%' }} // Set the button width to 100%
+            style={{ width: '100%' }}
+            disabled={loading}
           >
-            Login
+            {loading ? (
+              <>
+                <Spinner animation="border" size="sm" className="mr-2" />
+                Processing
+              </>
+            ) : (
+              "Login"
+            )}
           </Button>
         </Form>
         <br></br>

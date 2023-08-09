@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-// import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 import { Button } from "reactstrap";
 import Navbar from "../components/navbar";
 import NavbarUser from "../components/navbarUser";
@@ -7,8 +6,11 @@ import styles from "../../styles/feature.module.css";
 import { connect, useDispatch } from 'react-redux';
 import { setEmail } from "../../redux/action";
 
+
 const GameList = ({ isLoggedIn, user }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false); 
+
 
   const items = [
     {
@@ -56,11 +58,23 @@ const GameList = ({ isLoggedIn, user }) => {
   }, []);
 
   const handleClick = (path) => {
-    // navigate(path);
+    setLoading(true); 
     console.log(path);
     window.location.replace(path);
   };
-  
+
+
+  const textTitle = {
+    fontSize: '21px',
+    textAlign: 'center'
+  };
+
+  const textDescription = {
+    fontSize: '16px',
+    textAlign: 'center'
+  };
+
+
   return (
     <div className={styles.FeaturePageImage}>
       <NavbarUser isLoggedIn={isLoggedIn} userEmail={user.email}/>
@@ -92,8 +106,9 @@ const GameList = ({ isLoggedIn, user }) => {
                   <Button
                     color="primary"
                     onClick={() => handleClick(item.path)}
+                    disabled={loading} 
                   >
-                    Play
+                    {loading ? "Processing" : "Play"}
                   </Button>
              </div>
            </div>
@@ -104,9 +119,11 @@ const GameList = ({ isLoggedIn, user }) => {
   );
 };
 
+
 const mapStateToProps = (state) => ({
   isLoggedIn: state.reducer.isLoggedIn,
   user: state.reducer.user,
 });
 
 export default connect(mapStateToProps)(GameList);
+
