@@ -1,11 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 
-function NavbarUser(args) {
+
+function NavbarUser({ userEmail }) {
   return (
     <div>
-      <Navbar {...args} color="dark" dark expand="md">
-        <NavbarBrand className="ps-3">Team 2</NavbarBrand>
+      <Navbar color="dark" dark expand="md">
+        <NavItem>
+        <NavbarBrand className="ps-3">{`Welcome, ${userEmail}`}</NavbarBrand>
+        </NavItem>
+        
         <Nav className="ms-auto" navbar>
           <NavItem>
             <NavLink href="/editprofile">Edit Profile</NavLink>
@@ -18,5 +23,8 @@ function NavbarUser(args) {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  userEmail: state.reducer.email,
+});
 
-export default NavbarUser;
+export default connect(mapStateToProps)(NavbarUser);
