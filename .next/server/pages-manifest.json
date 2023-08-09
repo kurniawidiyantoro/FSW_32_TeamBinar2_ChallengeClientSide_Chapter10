@@ -1,20 +1,7 @@
 {
   "/_app": "pages/_app.js",
-  "/api/hello": "pages/api/hello.js",
-  "/components/carousel": "pages/components/carousel.html",
-  "/components/footer": "pages/components/footer.html",
-  "/components/navbar": "pages/components/navbar.html",
-  "/components/navbarUser": "pages/components/navbarUser.html",
-  "/editpassword": "pages/editpassword.html",
-  "/editprofile": "pages/editprofile.html",
-  "/feature": "pages/feature.html",
-  "/gamelist": "pages/gamelist.html",
-  "/gamerps": "pages/gamerps.html",
-  "/": "pages/index.html",
-  "/landing": "pages/landing.html",
-  "/login": "pages/login.html",
-  "/register": "pages/register.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/login": "pages/login.js",
+  "/gamelist": "pages/gamelist.js"
 }
