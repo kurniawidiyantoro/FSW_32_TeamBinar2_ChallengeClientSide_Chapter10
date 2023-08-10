@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
@@ -9,6 +10,7 @@ import styles from '../../styles/gameRPS.module.css';
 
 function Game() {
   // const navigate = useNavigate();
+  const router = useRouter();
   const [id, setId] = useState('');
   const [username, setUsername] = useState('');
   const [scores, setScores] = useState(0);
@@ -27,7 +29,7 @@ function Game() {
   };
 
   const updateScores = async () => {
-    setScores(scores + 1);
+    //setScores(prevScores => prevScores + 1);
     const token = localStorage.getItem("token");
     const response = await Axios.post('http://localhost:3005/usergame/update/scores',
         { id, scores: scores + 1 },
@@ -91,7 +93,9 @@ function Game() {
 
   useEffect(() => {
     checkToken();
+    //handleReload();
   }, []);
+  
 
   return (
     <div className={styles.background}>
