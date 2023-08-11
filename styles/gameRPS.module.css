@@ -45,10 +45,23 @@
 	top: 0;
 	font-size: 2rem; /* Adjust font size */
 	z-index: 2;
+
+}
+
+.Container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px; 
   }
   
-  /* Score Board */
+  .status {
+	font-size: 18px;
+	margin-top: 10px; 
+  }
+/* Score Board */
   .score {
+
 	display: flex;
 	width: 30vw;
 	justify-content: space-evenly;
@@ -143,7 +156,7 @@
 	font-size: 1.2rem;
 }
 
-.image {
+.Image {
 	height: 50px;
 	width: 50px;
 }

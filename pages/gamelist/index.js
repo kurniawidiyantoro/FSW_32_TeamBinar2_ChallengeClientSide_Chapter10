@@ -4,13 +4,12 @@ import Navbar from "../components/navbar";
 import NavbarUser from "../components/navbarUser";
 import styles from "../../styles/feature.module.css";
 import { connect, useDispatch } from 'react-redux';
-import { setEmail } from "../../redux/action";
+import { setEmail, setPlayedGames  } from "../../redux/action";
 
 
-const GameList = ({ isLoggedIn, user }) => {
+const GameList = ({ isLoggedIn, user, playedGames }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false); 
-
 
   const items = [
     {
@@ -32,7 +31,6 @@ const GameList = ({ isLoggedIn, user }) => {
       path: "/gamedice",
     },
   ];
-
   const checkToken = async () => {
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');
@@ -55,7 +53,12 @@ const GameList = ({ isLoggedIn, user }) => {
     const email = localStorage.getItem('email');
     dispatch(setEmail(email));
     checkToken();
-  }, []);
+    // Retrieve played games from local storage or Redux store
+  const playedGames = JSON.parse(localStorage.getItem('playedGames')) || {};
+
+  // Dispatch the action to update the played games in Redux store
+  dispatch(setPlayedGames(playedGames));
+    }, []);
 
   const handleClick = (path) => {
     setLoading(true); 
@@ -90,13 +93,15 @@ const GameList = ({ isLoggedIn, user }) => {
 
         {/* Items */}
         <div className={styles.mderwSm}>
-          {items.map((item, index) => (
-             <div
-             key={index}
-             className={styles.rectangleItem}
-             style={{ backgroundImage: `url(${item.backgroundImage})` }}
-             data-aos="fade-up"
-           >
+        {items.map((item, index) => (
+            <div
+              key={index}
+              className={`${styles.rectangleItem} ${playedGames[item.path] ? styles.played : ''}`}
+              style={{ backgroundImage: `url(${item.backgroundImage})` }}
+              data-aos="fade-up"
+            >
+              <div className={styles.playedText}>{playedGames[item.path] ? 'Pernah Dimainkan' : ''}</div>
+              {console.log(`Item path: ${item.path}, Played: ${playedGames[item.path]}`)}
              <div className={styles.rectangleItemContent}>
                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                  {/* Add SVG content here if needed */}
@@ -123,6 +128,7 @@ const GameList = ({ isLoggedIn, user }) => {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.reducer.isLoggedIn,
   user: state.reducer.user,
+  playedGames: state.reducer.playedGames,
 });
 
 export default connect(mapStateToProps)(GameList);
