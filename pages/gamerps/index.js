@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import styles from '../../styles/gameRPS.module.css';
+import {setPlayedGames  } from "../../redux/action";
+import { useDispatch, useSelector } from 'react-redux';
+// import batuImage from '../../assets/images/batu.png';
+// import kertasImage from '../../assets/images/kertas.png';
+// import guntingImage from '../../assets/images/gunting.png';
 
 function Game() {
-  const router = useRouter();
-
+  // const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [username, setUsername] = useState('');
   const [round, setRound] = useState(0);
@@ -14,8 +18,11 @@ function Game() {
   const [getscore, setGetScore] = useState(0);
   const [totalscore, setTotalScore] = useState(0);
   const [result, setResult] = useState(null);
+  const dispatch = useDispatch();
+  const playedGames = useSelector(state => state.reducer.playedGames);
 
   const handleBackClick = () => {
+    // navigate('/gamelist');
     window.location.replace('/gamelist');
   };
 
@@ -24,6 +31,24 @@ function Game() {
     const computerMove = moves[Math.floor(Math.random() * moves.length)];
     const winner = determineWinner(playerMove, computerMove);
     setResult({ playerMove, computerMove, winner });
+    dispatch(setPlayedGames({ ...playedGames, '/gamerps': true }));
+    console.log("Played Games:", playedGames);
+    localStorage.setItem('playedGames', JSON.stringify({ ...playedGames, '/gamerps': true }));
+  };
+
+  const updateScores = async () => {
+    const gamename = 'gamerps'
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    const response = await Axios.post('http://localhost:3005/gamehistory/insert',
+        { gamename, id, username, email, round, status, getscore, totalscore },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          }
+        }
+    );
+    console.log(response.data.status);
   }
 
   const determineWinner = (playerMove, computerMove) => {
@@ -56,21 +81,6 @@ function Game() {
   const handleReload = () => {
     setResult(null);
   };
-
-  const updateScores = async () => {
-    const gamename = 'gamerps'
-    const token = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
-    const response = await Axios.post('http://localhost:3005/gamehistory/insert',
-        { gamename, id, username, email, round, status, getscore, totalscore },
-        {
-          headers: {
-            Authorization: `Basic ${token}`,
-          }
-        }
-    );
-    console.log(response.data.status);
-  }
 
   const checkToken = async () => {
     const token = localStorage.getItem("token");
@@ -107,9 +117,7 @@ function Game() {
 
   useEffect(() => {
     checkToken();
-    //handleReload();
   }, []);
-  
 
   return (
     <div className={styles.background}>
@@ -125,8 +133,9 @@ function Game() {
           <div className={styles.status}>Current Round: {round + 1}</div>
           <div className={styles.status}>Total Scores: {totalscore}</div>
         </div>
+
         <div className={styles.gridContainer}>
-          <div className={styles.gridItem}>
+        <div className={`${styles.gridItem} ${styles.options}`}>
             <h1 className={styles.move}>Choose your move</h1>
             <button className={styles.moveBtn} onClick={() => handlePlayerMove('rock')}>
               <img src={'/images/batu.png'} alt="" className={styles.Image} />
@@ -138,7 +147,7 @@ function Game() {
               <img src={'./images/gunting.png'} alt="" className={styles.Image} />
             </button>
           </div>
-          <div className={styles.gridItem}>
+          <div className={`${styles.gridItem} ${styles.options}`}>
             <h1 className={styles.move}>Computer</h1>
             <button className={styles.moveBtn} disabled>
               {result && <img src={'/images/batu.png'} alt="" className={styles.Image} />}
