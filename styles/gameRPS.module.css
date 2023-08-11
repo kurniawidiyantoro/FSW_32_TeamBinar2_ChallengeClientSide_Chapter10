@@ -1,62 +1,62 @@
 /* styles.css */
 /* universal selector - Applies to whole document */
-.background{
+.background {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
 	background: #151b25;
 	color: #8a6a6a;
-}
-
-.gridContainer {
-	display: flex;
-  	flex-direction: row;
-	background-color: #2196F3;
-	padding: 10px;
-}
+  }
   
-.gridItem {
+  .gridContainer {
+	display: flex;
+	flex-direction: row;
+	background-color: #2196f3;
+	padding: 10px;
+  }
+  
+  .gridItem {
 	flex-direction: column;
 	background-color: rgba(255, 255, 255, 0.8);
 	border: 1px solid rgba(0, 0, 0, 0.8);
 	padding: 20px;
-	font-size: 30px;
+	font-size: 1rem; /* Adjust font size */
 	align-items: center;
-
 	display: flex;
 	width: 50vw;
 	justify-content: space-evenly;
 	margin-top: 2rem;
-}
-
-/* To center everything in game */
-.game{
+  }
+  
+  /* To center everything in game */
+  .game {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 	width: 100vw;
 	justify-content: center;
 	align-items: center;
-}
-
-/* Title of the game */
-.title{
+  }
+  
+  /* Title of the game */
+  .title {
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	position: absolute;
 	top: 0;
-	font-size: 4rem;
+	font-size: 2rem; /* Adjust font size */
 	z-index: 2;
-}
-
-/* Score Board */
-.score{
+  }
+  
+  /* Score Board */
+  .score {
 	display: flex;
 	width: 30vw;
 	justify-content: space-evenly;
 	position: absolute;
 	top: 70px;
 	z-index: 1;
-}
+	font-size: 1.2rem; /* Adjust font size */
+  }
 
 /* Score */
 .p-count,.c-count{
@@ -88,7 +88,7 @@
 }
 
 /* Styling on all three buttons */
-.rock, .paper, .scissor, .rockcom, .papercom, .scissorcom {
+/* .rock, .paper, .scissor, .rockcom, .papercom, .scissorcom {
 	padding: 0.8rem;
 	width: 100px;
 	border-radius: 10px;
@@ -97,7 +97,28 @@
 	border-color: green;
 	border: none;
 	cursor: pointer;
-}
+} */
+
+.moveBtn {
+	padding: 0px;
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+	/* background: green; */
+	outline: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 1rem;
+  }
+
+  .moveBtn img {
+	width: 120%;
+	height: 120%;
+  }
+  
 
 .move{
 	font-size: 2rem;
@@ -107,7 +128,7 @@
 /* Reload button style */
 .reload {
 	background-image: url(/assets/refresh.png);
-	display: none;
+	/* display: none; */
 	margin-top: 2rem;
 	padding: 1rem;
 	background: green;
