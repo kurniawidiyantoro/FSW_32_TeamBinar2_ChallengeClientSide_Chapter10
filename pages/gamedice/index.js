@@ -3,7 +3,8 @@ import Axios from 'axios';
 // import { useNavigate } from "react-router-dom";
 import styles from "../../styles/gameDice.module.css";
 import { Button } from 'reactstrap';
-
+import {setPlayedGames  } from "../../redux/action";
+import { useDispatch, useSelector } from 'react-redux';
 import dice1 from '../../assets/images/dice1.svg';
 import dice2 from '../../assets/images/dice2.svg';
 import dice3 from '../../assets/images/dice3.svg';
@@ -17,7 +18,8 @@ function Dices() {
   const [username, setUsername] = useState('');
   const [scores, setScores] = useState(0);
   const [result, setResult] = useState('Click tombol dibawah untuk memulai permainan');
-
+  const dispatch = useDispatch();
+  const playedGames = useSelector(state => state.reducer.playedGames);
   const playerRef = useRef(null);
   const computerRef = useRef(null);
   const resultDice = useRef(null);
@@ -34,7 +36,7 @@ function Dices() {
     if (playerRandomNum > computerRandomNum) {
       setResult(`Player menang dengan ${playerRandomNum + 1} points`);
       setScores((prevScore) => prevScore + 1);
-      updateScores();
+      // updateScores();
     } else if (playerRandomNum < computerRandomNum) {
       setResult(`Computer menang dengan ${computerRandomNum + 1} points`);
     } else {
@@ -43,9 +45,14 @@ function Dices() {
 
     playerRef.current.setAttribute('src', diceImages[playerRandomNum]);
     computerRef.current.setAttribute('src', diceImages[computerRandomNum]);
-  };
+    console.log("Initial Played Games:", playedGames);
+    dispatch(setPlayedGames({ ...playedGames, '/gamedice': true }));
+    localStorage.setItem('playedGames', JSON.stringify({ ...playedGames, '/gamedice': true }));
+    console.log("Played Games:", playedGames);
+    };
 
   const handleBackClick = () => {
+    
     window.location.replace('gamelist') // Specify the desired path here
   };
 

@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { Button } from 'reactstrap';
 // import { useNavigate } from "react-router-dom";
 import styles from "../../styles/gameCoin.module.css";
+import {setPlayedGames  } from "../../redux/action";
+import { useDispatch, useSelector } from 'react-redux';
 
 const CoinFlipGame = () => {
   const [id, setId] = useState('');
@@ -14,6 +16,8 @@ const CoinFlipGame = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [headsImgLoaded, setHeadsImgLoaded] = useState(false);
   const [tailsImgLoaded, setTailsImgLoaded] = useState(false);
+  const dispatch = useDispatch();
+  const playedGames = useSelector(state => state.reducer.playedGames);
   // const navigate = useNavigate();
 
   const handleHeadsImgLoad = () => {
@@ -33,7 +37,10 @@ const CoinFlipGame = () => {
       // Update the score after the animation has ended based on coinSide and guessedOption
       if ((coinSide === "heads" && guessedOption === "heads") || (coinSide === "tails" && guessedOption === "tails")) {
         setScores((prevScore) => prevScore + 1);
-        updateScores();
+        // updateScores();
+        dispatch(setPlayedGames({ ...playedGames, '/gamecoin': true }));
+        console.log("Played Games:", playedGames);
+        localStorage.setItem('playedGames', JSON.stringify({ ...playedGames, '/gamecoin': true }));
       }
 
       setShowPopup(true);
@@ -53,6 +60,7 @@ const CoinFlipGame = () => {
     // Calculate the new coin side based on Math.random()
     const newCoinSide = Math.random() < 0.5 ? "heads" : "tails";
     setCoinSide(newCoinSide);
+    dispatch(setPlayedGames({ ...playedGames, '/gamecoin': true }));
   };
   
   const handleBackClick = () => {
