@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import styles from '../../styles/gameRPS.module.css';
-// import batuImage from '../../assets/images/batu.png';
-// import kertasImage from '../../assets/images/kertas.png';
-// import guntingImage from '../../assets/images/gunting.png';
 
 function Game() {
-  // const navigate = useNavigate();
   const router = useRouter();
-  const [id, setId] = useState('');
+
+  const [id, setId] = useState(null);
   const [username, setUsername] = useState('');
-  const [scores, setScores] = useState(0);
+  const [round, setRound] = useState(0);
+  const [status, setStatus] = useState('');
+  const [getscore, setGetScore] = useState(0);
+  const [totalscore, setTotalScore] = useState(0);
   const [result, setResult] = useState(null);
 
   const handleBackClick = () => {
-    // navigate('/gamelist');
     window.location.replace('/gamelist');
   };
 
@@ -26,13 +24,45 @@ function Game() {
     const computerMove = moves[Math.floor(Math.random() * moves.length)];
     const winner = determineWinner(playerMove, computerMove);
     setResult({ playerMove, computerMove, winner });
+  }
+
+  const determineWinner = (playerMove, computerMove) => {
+    if (playerMove === computerMove) {
+      setRound(round + 1);
+      setStatus('draw');
+      setGetScore(0);
+      updateScores();
+      return "Draw!";
+    } else if (
+      (playerMove === 'rock' && computerMove === 'scissors') ||
+      (playerMove === 'paper' && computerMove === 'rock') ||
+      (playerMove === 'scissors' && computerMove === 'paper')
+    ) {
+      setRound(round + 1);
+      setStatus('win');
+      setGetScore(1);
+      setTotalScore(totalscore + 1);
+      updateScores();
+      return `${username} win!`;
+    } else {
+      setRound(round + 1);
+      setStatus('lose');
+      setGetScore(0);
+      updateScores();
+      return 'Computer wins!';
+    }
+  };
+
+  const handleReload = () => {
+    setResult(null);
   };
 
   const updateScores = async () => {
-    //setScores(prevScores => prevScores + 1);
+    const gamename = 'gamerps'
     const token = localStorage.getItem("token");
-    const response = await Axios.post('http://localhost:3005/usergame/update/scores',
-        { id, scores: scores + 1 },
+    const email = localStorage.getItem("email");
+    const response = await Axios.post('http://localhost:3005/gamehistory/insert',
+        { gamename, id, username, email, round, status, getscore, totalscore },
         {
           headers: {
             Authorization: `Basic ${token}`,
@@ -42,28 +72,10 @@ function Game() {
     console.log(response.data.status);
   }
 
-  const determineWinner = (playerMove, computerMove) => {
-    if (playerMove === computerMove) {
-      return "Draw!";
-    } else if (
-      (playerMove === 'rock' && computerMove === 'scissors') ||
-      (playerMove === 'paper' && computerMove === 'rock') ||
-      (playerMove === 'scissors' && computerMove === 'paper')
-    ) {
-      updateScores();
-      return `${username} win!`;
-    } else {
-      return 'Computer wins!';
-    }
-  };
-
-  const handleReload = () => {
-    setResult(null);
-  };
-
   const checkToken = async () => {
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("email");
+    const gamename = 'gamerps'
     console.log(token);
     console.log(email);
     try {
@@ -71,8 +83,8 @@ function Game() {
         console.log('Not Authorize !');
         navigate('/login'); // Ganti dengan useNavigate()
       } else {
-        const response = await Axios.post('http://localhost:3005/usergame/get',
-          { email },
+        const response = await Axios.post('http://localhost:3005/gamehistory/get',
+          { email, gamename },
           {
             headers: {
               Authorization: `Basic ${token}`,
@@ -80,13 +92,15 @@ function Game() {
           }
         );
         console.log(response.data.data);
-        setId(response.data.data.id);
+        setId(response.data.data.id)
         setUsername(response.data.data.username);
-        setScores(response.data.data.scores);
+        setRound(response.data.data.round);
+        setStatus(response.data.data.status);
+        setGetScore(response.data.data.getscore);
+        setTotalScore(response.data.data.totalscore);
       }
     } catch (error) {
       console.log("Internal Server Error !");
-      // navigate('/login'); // Ganti dengan useNavigate()
       window.location.replace('/login');
     }
   };
@@ -105,8 +119,12 @@ function Game() {
         </Button>
       </div>
       <section className={styles.game}>
-        <div className={styles.title}>Rock Paper Scissors</div>
-        <div className={styles.score}>Scores: {scores}</div>
+      <div className={styles.Container}>
+          <div className={styles.title}>Rock Paper Scissors</div>
+          <div className={styles.status}>Status Last Round: {status}</div>
+          <div className={styles.status}>Current Round: {round + 1}</div>
+          <div className={styles.status}>Total Scores: {totalscore}</div>
+        </div>
         <div className={styles.gridContainer}>
           <div className={styles.gridItem}>
             <h1 className={styles.move}>Choose your move</h1>

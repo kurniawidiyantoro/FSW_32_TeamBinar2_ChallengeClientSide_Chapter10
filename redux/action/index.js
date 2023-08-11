@@ -1,24 +1,24 @@
 import Axios from 'axios';
 
 
-export function loginRequest(){
-  return {
-    type: 'LOGIN_REQUEST'
-  }
- };
+// export function loginRequest(){
+//   return {
+//     type: 'LOGIN_REQUEST'
+//   }
+//  };
 
- export function loginSuccess (token, email) {
-  return{
-  type: 'LOGIN_SUCCESS',
-  payload: { token, email },
-}};
+//  export function loginSuccess (token, email) {
+//   return{
+//   type: 'LOGIN_SUCCESS',
+//   payload: { token, email },
+// }};
 
-export function loginFailure (error){
-  return{
-    type: 'LOGIN_FAILURE',
-    payload: error,
-  }  
-};
+// export function loginFailure (error){
+//   return{
+//     type: 'LOGIN_FAILURE',
+//     payload: error,
+//   }  
+// };
 
 export function setEmail(email) {
   return {
@@ -32,32 +32,32 @@ export const setLoggedIn = (isLoggedIn, user) => ({
   payload: { isLoggedIn, user },
 });
 
-export const setPlayedGames = (games) => ({
+export const setPlayedGames = (playedGames) => ({
   type: 'SET_PLAYED_GAMES',
-  payload: games,
+  payload: playedGames,
 });
 
-// Async Action to perform login
-export const loginUser = (email, password) => async (dispatch) => {
-  dispatch(loginRequest());
 
-  try {
-    const response = await Axios.post('http://localhost:3005/login', {
-      email,
-      password,
-    });
+// export const loginUser = (email, password) => async (dispatch) => {
+//   dispatch(loginRequest());
 
-    const { token, email: userEmail } = response.data;
+//   try {
+//     const response = await Axios.post('http://localhost:3005/login', {
+//       email,
+//       password,
+//     });
 
-    localStorage.setItem('token', token);
-    localStorage.setItem('email', userEmail);
+//     const { token, email: userEmail } = response.data;
 
-    dispatch(loginSuccess(token, userEmail));
-    dispatch(setEmail(userEmail));
-  } catch (error) {
-    const errorMessage = error.response ? error.response.data.message : 'An error occurred';
-    dispatch(loginFailure(errorMessage));
-  }
-};
+//     localStorage.setItem('token', token);
+//     localStorage.setItem('email', userEmail);
+
+//     dispatch(loginSuccess(token, userEmail));
+//     dispatch(setEmail(userEmail));
+//   } catch (error) {
+//     const errorMessage = error.response ? error.response.data.message : 'An error occurred';
+//     dispatch(loginFailure(errorMessage));
+//   }
+// };
 
 
