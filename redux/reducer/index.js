@@ -3,6 +3,7 @@ const initialState = {
   email: '',
   // email: typeof window !== 'undefined' ? localStorage.getItem('email') || '' : '',
   // password: typeof window !== 'undefined' ? localStorage.getItem('password') || '' : '',
+  playedGames: {},
   error: ''
   };
 
@@ -13,13 +14,13 @@ const initialState = {
       case 'SET_EMAIL':
         return { ...state, email: action.payload };
       case 'SET_PLAYED_GAMES':
-        return { ...state, ...action.payload };
-      case 'LOGIN_REQUEST':
-        return { ...state, loading: true, error: '' };
-      case 'LOGIN_SUCCESS':
-        return { ...state, loading: false, token: action.payload.token, email: action.payload.email, error: '' };
-      case 'LOGIN_FAILURE':
-        return { ...state, loading: false, error: action.payload };  
+        return { ...state, playedGames: { ...state.playedGames, ...action.payload } };
+      // case 'LOGIN_REQUEST':
+      //   return { ...state, loading: true, error: '' };
+      // case 'LOGIN_SUCCESS':
+      //   return { ...state, loading: false, token: action.payload.token, email: action.payload.email, error: '' };
+      // case 'LOGIN_FAILURE':
+      //   return { ...state, loading: false, error: action.payload };  
       default:
         return state;
     }
