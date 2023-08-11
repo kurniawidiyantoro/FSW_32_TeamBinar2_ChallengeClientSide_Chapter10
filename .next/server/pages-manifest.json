@@ -2,8 +2,12 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+<<<<<<< HEAD
   "/login": "pages/login.js",
   "/gamerps": "pages/gamerps.js",
   "/": "pages/index.js",
+=======
+  "/gamerps": "pages/gamerps.js",
+>>>>>>> f8507369fbedc281bf776d468f68f51031cfed1d
   "/gamelist": "pages/gamelist.js"
 }

@@ -24,7 +24,7 @@ function Game() {
     const computerMove = moves[Math.floor(Math.random() * moves.length)];
     const winner = determineWinner(playerMove, computerMove);
     setResult({ playerMove, computerMove, winner });
-  };
+  }
 
   const determineWinner = (playerMove, computerMove) => {
     if (playerMove === computerMove) {
@@ -107,6 +107,7 @@ function Game() {
 
   useEffect(() => {
     checkToken();
+    //handleReload();
   }, []);
   
 
