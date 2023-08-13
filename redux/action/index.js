@@ -27,6 +27,11 @@ export function setEmail(email) {
   };
 }
 
+export const setTotalScore = (totalScore) => ({
+  type: 'SET_TOTAL_SCORE',
+  payload: totalScore,
+});
+
 export const setLoggedIn = (isLoggedIn, user) => ({
   type: 'SET_LOGGED_IN',
   payload: { isLoggedIn, user },
@@ -37,6 +42,15 @@ export const setPlayedGames = (playedGames) => ({
   payload: playedGames,
 });
 
+export const fetchUserTotalScore = (userEmail) => async (dispatch) => {
+  try {
+    const response = await Axios.get(`http://localhost:3005/gamehistory/get/${userEmail}`);
+    const userTotalScore = response.data.totalScore; // Adjust this based on your API response
+    dispatch(setTotalScore(userTotalScore));
+  } catch (error) {
+    console.error('Error fetching user total score:', error);
+  }
+};
 
 // export const loginUser = (email, password) => async (dispatch) => {
 //   dispatch(loginRequest());

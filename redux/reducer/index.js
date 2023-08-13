@@ -4,6 +4,7 @@ const initialState = {
   // email: typeof window !== 'undefined' ? localStorage.getItem('email') || '' : '',
   // password: typeof window !== 'undefined' ? localStorage.getItem('password') || '' : '',
   playedGames: {},
+  totalScore: 0,
   error: ''
   };
 
@@ -11,6 +12,8 @@ const initialState = {
     switch (action.type) {
       case 'SET_USER':
         return {...state, user: action.payload.user, email: action.payload.email};
+      case 'SET_TOTAL_SCORE':
+        return { ...state, totalScore: action.payload };
       case 'SET_EMAIL':
         return { ...state, email: action.payload };
       case 'SET_PLAYED_GAMES':
