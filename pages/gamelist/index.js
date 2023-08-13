@@ -11,6 +11,10 @@ const GameList = ({ isLoggedIn, user, playedGames }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false); 
 
+  const handleLeaderBboardkClick = () => {
+    window.location.replace('/leaderboard');
+  };
+
   const items = [
     {
       title: "Rock Paper Scissor",
@@ -84,13 +88,16 @@ const GameList = ({ isLoggedIn, user, playedGames }) => {
       <div className="py-12 md:py-20">
         {/* Section header */}
         <div className="text-center">
-          <h2 className={styles.featureTitle}>Selamat datang</h2>
           <h2 className={styles.featureTitle}>Game List</h2>
           <p className={styles.featureDescription}>
             Berbagai permainan yang bisa anda mainkan di website kami
           </p>
         </div>
-
+        <div className="d-flex justify-content-center">
+          <Button color="primary" onClick={handleLeaderBboardkClick}>
+            Leaderboard
+          </Button>
+        </div>
         {/* Items */}
         <div className={styles.mderwSm}>
         {items.map((item, index) => (
