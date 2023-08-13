@@ -24,10 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/gamerps": [
+    "/gamelist": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/gamerps.js"
+      "static/chunks/pages/gamelist.js"
+    ],
+    "/leaderboard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/leaderboard.js"
     ]
   },
   "ampFirstPages": []
