@@ -44,9 +44,27 @@ export const setPlayedGames = (playedGames) => ({
 
 export const fetchUserTotalScore = (userEmail) => async (dispatch) => {
   try {
-    const response = await Axios.get(`http://localhost:3005/gamehistory/get/${userEmail}`);
-    const userTotalScore = response.data.totalScore; // Adjust this based on your API response
-    dispatch(setTotalScore(userTotalScore));
+    const token = localStorage.getItem('token');
+    const gamename = 'gamerps';
+
+    if (!token) {
+      console.log('Not Authorized!');
+      window.location.replace('/login');
+      return; // Return early if not authorized
+    }
+
+    const response = await Axios.post(
+      'http://localhost:3005/gamehistory/get/rank',
+      { email: userEmail, gamename },
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    );
+
+    const userTotalScore = response.data.data.totalscore;
+    dispatch(setTotalScore(userTotalScore)); // Dispatch the total score to Redux store
   } catch (error) {
     console.error('Error fetching user total score:', error);
   }

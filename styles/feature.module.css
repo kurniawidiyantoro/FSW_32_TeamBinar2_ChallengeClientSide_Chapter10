@@ -6,6 +6,15 @@
     height: 100vh;
 }
 
+.LeaderboardPageImage{
+  background-image: url("../assets/images/rock-paper-scissor.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .featureTitle {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     color: #9e9393;  

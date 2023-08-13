@@ -7,9 +7,9 @@ import { fetchUserTotalScore } from '../../redux/action';
 function NavbarUser({ userEmail, totalScore }) {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchUserTotalScore(userEmail));
-  // }, [dispatch, userEmail]);
+  useEffect(() => {
+    dispatch(fetchUserTotalScore(userEmail));
+  }, [dispatch, userEmail]);
   return (
     <div>
       <Navbar color="dark" dark expand="md">
