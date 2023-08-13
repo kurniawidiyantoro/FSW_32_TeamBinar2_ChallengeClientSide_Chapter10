@@ -25,6 +25,7 @@
     max-width: 2xl;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
+    padding: 10px;
 }
   
 .rectangleItem {
@@ -73,6 +74,10 @@
   color: white;
   font-size: 30px;
   font-weight: bold;
+}
+
+.tableStyle{
+  width: 100%;
 }
 
   @media (min-width: 768px) {

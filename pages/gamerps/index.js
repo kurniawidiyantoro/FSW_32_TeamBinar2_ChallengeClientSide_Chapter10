@@ -3,7 +3,7 @@ import Axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import styles from '../../styles/gameRPS.module.css';
-import {setPlayedGames  } from "../../redux/action";
+import {setPlayedGames, setTotalScore  } from "../../redux/action";
 import { useDispatch, useSelector } from 'react-redux';
 // import batuImage from '../../assets/images/batu.png';
 // import kertasImage from '../../assets/images/kertas.png';
@@ -68,6 +68,7 @@ function Game() {
       setGetScore(1);
       setTotalScore(totalscore + 1);
       updateScores();
+      dispatch(setTotalScore(totalscore + 1));
       return `${username} win!`;
     } else {
       setRound(round + 1);
@@ -91,7 +92,7 @@ function Game() {
     try {
       if (!token) {
         console.log('Not Authorize !');
-        navigate('/login'); // Ganti dengan useNavigate()
+        window.location.replace('/login'); 
       } else {
         const response = await Axios.post('http://localhost:3005/gamehistory/get',
           { email, gamename },
