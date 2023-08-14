@@ -4,12 +4,13 @@ import Axios from 'axios';
 import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import styles from '../../styles/RegisterPage.module.css';
 import avatar from '../../assets/images/avatar.jpg';
+import Spinner from 'react-bootstrap/Spinner';
 
 const RegisterPage = () => {
     const [hideAlert, setHideAlert] = useState(true);
     const [alertMessage, setAlertMessage] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
-
+    const [loading, setLoading] = useState(false);
     const [payload, setPayLoad] = useState({
         username: '',
         email: '',
@@ -34,12 +35,11 @@ const RegisterPage = () => {
 
     const registerApi = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
         if (!isFormValid()) {
             setAlertMessage('Please fill in all fields correctly!');
             setHideAlert(false);   
         }
-
         try { 
             const formData = new FormData();
             formData.append("profilepic", selectedImage);
@@ -48,9 +48,9 @@ const RegisterPage = () => {
             formData.append("password", payload.password);
             formData.append("confirmPassword", payload.confirmPassword);
 
-            const responseUpload = await Axios.post("http://localhost:3005/usergame/upload-profile-pic", formData);
             const responseInsert = await Axios.post("http://localhost:3005/usergame/insert", payload);
-            
+            await Axios.post("http://localhost:3005/usergame/upload-profile-pic", formData);
+        
             console.log(responseInsert);
             window.location.replace('/login');
             
@@ -61,6 +61,8 @@ const RegisterPage = () => {
             console.log(error.response.data.message);
             setAlertMessage(error.response.data.message);
             setHideAlert(false);  
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -153,8 +155,16 @@ const RegisterPage = () => {
                         block
                         style={{ width: '100%' }} // Set the button width to 100%
                         onClick={registerApi}
+                        disabled={loading}
                     >
-                        Register
+                        {loading ? (
+                            <>
+                               <Spinner animation="border" size="sm" className="mr-2" />
+                                Processing 
+                            </>
+                        ) : (
+                            "Register"
+                        )}
                     </Button>
                     <br></br>
                     <br></br>
