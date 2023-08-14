@@ -35,7 +35,7 @@ const LeaderBoard = ({ isLoggedIn, user}) => {
                 window.location.replace('/login');
             } else {
                 const gamename = 'gamerps';
-                const response = await Axios.post('http://localhost:3005/gamehistory/get/rank',
+                const response = await Axios.post(`${process.env.REACT_APP_BE_URL}/gamehistory/get/rank`,
                 { email, gamename },
                 { headers: {
                     Authorization: `Basic ${token}`,

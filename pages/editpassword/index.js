@@ -31,7 +31,7 @@ const EditPasswordPage = () => {
         window.location.replace('/login');
       } else {
         const response = await Axios.post(
-          'http://localhost:3005/usergame/get',
+          `${process.env.REACT_APP_BE_URL}/usergame/get`,
           { email },
           {
             headers: {
@@ -58,7 +58,7 @@ const EditPasswordPage = () => {
     setLoading(true);
     try {
       const response = await Axios.post(
-        'http://localhost:3005/usergame/update/password',
+        `${process.env.REACT_APP_BE_URL}/usergame/update/password`,
         {
           id,
           newPassword: payload.newPassword,

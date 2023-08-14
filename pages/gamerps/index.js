@@ -42,7 +42,7 @@ function Game() {
     const gamename = 'gamerps'
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("email");
-    const response = await Axios.post('http://localhost:3005/gamehistory/insert',
+    const response = await Axios.post(`${process.env.REACT_APP_BE_URL}/gamehistory/insert`,
         { gamename, id, username, email, round, status, getscore, totalscore },
         {
           headers: {
@@ -96,7 +96,7 @@ function Game() {
         console.log('Not Authorize !');
         window.location.replace('/login'); 
       } else {
-        const response = await Axios.post('http://localhost:3005/gamehistory/get',
+        const response = await Axios.post(`${process.env.REACT_APP_BE_URL}/gamehistory/get`,
           { email, gamename },
           {
             headers: {

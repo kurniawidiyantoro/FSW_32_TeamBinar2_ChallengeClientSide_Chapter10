@@ -27,7 +27,7 @@ const EditProfilePage = () => {
         window.location.replace('/login');
       } else {
         const response = await Axios.post(
-          'http://localhost:3005/usergame/get',
+          `${process.env.REACT_APP_BE_URL}/usergame/get`,
           { email },
           {
             headers: {
@@ -46,7 +46,7 @@ const EditProfilePage = () => {
 
         // Fetch the profile picture URL 
         const profilePicUrlResponse = await Axios.post(
-          'http://localhost:3005/usergame/getProfilePicUrl',
+          `${process.env.REACT_APP_BE_URL}/usergame/getProfilePicUrl`,
           { inputUsername },
           {
             headers: {
@@ -87,7 +87,7 @@ const EditProfilePage = () => {
     setLoading(true);
     const token = localStorage.getItem("token");
     try {
-        const response = await Axios.post("http://localhost:3005/usergame/update/profile",
+        const response = await Axios.post(`${process.env.REACT_APP_BE_URL}/usergame/update/profile`,
           { 
             id,
             username,

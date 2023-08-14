@@ -48,8 +48,8 @@ const RegisterPage = () => {
             formData.append("password", payload.password);
             formData.append("confirmPassword", payload.confirmPassword);
 
-            const responseInsert = await Axios.post("http://localhost:3005/usergame/insert", payload);
-            await Axios.post("http://localhost:3005/usergame/upload-profile-pic", formData);
+            const responseInsert = await Axios.post(`${process.env.REACT_APP_BE_URL}/usergame/insert`, payload);
+            await Axios.post(`${process.env.REACT_APP_BE_URL}/usergame/upload-profile-pic`, formData);
         
             console.log(responseInsert);
             window.location.replace('/login');
