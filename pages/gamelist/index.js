@@ -58,10 +58,10 @@ const GameList = ({ isLoggedIn, user, playedGames }) => {
     dispatch(setEmail(email));
     checkToken();
     // Retrieve played games from local storage or Redux store
-  const playedGames = JSON.parse(localStorage.getItem('playedGames')) || {};
+    const playedGames = JSON.parse(localStorage.getItem('playedGames')) || {};
 
-  // Dispatch the action to update the played games in Redux store
-  dispatch(setPlayedGames(playedGames));
+    // Dispatch the action to update the played games in Redux store
+    dispatch(setPlayedGames(playedGames));
     }, []);
 
   const handleClick = (path) => {

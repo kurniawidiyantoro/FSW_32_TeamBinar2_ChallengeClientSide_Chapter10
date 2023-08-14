@@ -7,17 +7,17 @@ import { fetchUserTotalScore } from '../../redux/action';
 function NavbarUser({ userEmail, totalScore }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUserTotalScore(userEmail));
-  }, [dispatch, userEmail]);
+  // useEffect(() => {
+  //   dispatch(fetchUserTotalScore(userEmail));
+  // }, [dispatch, userEmail]);
   return (
     <div>
       <Navbar color="dark" dark expand="md">
         <NavItem>
         <NavbarBrand className="ps-3">{`Welcome, ${userEmail}`}
-        {totalScore !== undefined && (
+        {/* {totalScore !== undefined && (
           <span className="ps-2">Total Score: {totalScore}</span>
-        )}
+        )} */}
         </NavbarBrand>
         </NavItem>
         

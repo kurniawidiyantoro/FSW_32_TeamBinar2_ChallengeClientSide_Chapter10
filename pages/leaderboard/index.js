@@ -18,7 +18,13 @@ const LeaderBoard = ({ isLoggedIn, user}) => {
     const handleBackClick = () => {
         window.location.replace('/gamelist');
       };
-
+    const handleGamecoinClick = () => {
+        window.location.replace('/leaderboard/gamecoin');
+      };
+      
+    const handleGamedadulick = () => {
+        window.location.replace('/leaderboard/gamedice');
+      };
 
     const getData = async ()=> {
         const token = localStorage.getItem("token");
@@ -61,6 +67,14 @@ const LeaderBoard = ({ isLoggedIn, user}) => {
           <Button color="primary" onClick={handleBackClick} className='mt-3'>
             Kembali
           </Button>
+          <div className={styles.buttonContainer}>
+            <Button color="success" onClick={handleGamecoinClick} className='mt-3'>
+                Game Coin
+            </Button>
+            <Button color="success" onClick={handleGamedadulick} className='mt-3'>
+                Game Dadu
+            </Button>
+          </div>
           <div className='mt-4'>
             {playerData.length === 0 ? (
               <Skeleton active />
@@ -69,7 +83,7 @@ const LeaderBoard = ({ isLoggedIn, user}) => {
                 <Table striped datasource={slicedPlayerData} pagination=''>
                   <thead>
                     <tr>
-                      <th>Rank</th>
+                      <th>#</th>
                       <th>Username</th>
                       <th>Game Name</th>
                       <th>Status</th>
