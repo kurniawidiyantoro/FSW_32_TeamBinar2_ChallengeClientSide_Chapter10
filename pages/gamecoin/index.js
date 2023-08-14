@@ -38,9 +38,6 @@ const CoinFlipGame = () => {
       if ((coinSide === "heads" && guessedOption === "heads") || (coinSide === "tails" && guessedOption === "tails")) {
         setScores((prevScore) => prevScore + 1);
         // updateScores();
-        dispatch(setPlayedGames({ ...playedGames, '/gamecoin': true }));
-        console.log("Played Games:", playedGames);
-        localStorage.setItem('playedGames', JSON.stringify({ ...playedGames, '/gamecoin': true }));
       }
 
       setShowPopup(true);
@@ -61,6 +58,8 @@ const CoinFlipGame = () => {
     const newCoinSide = Math.random() < 0.5 ? "heads" : "tails";
     setCoinSide(newCoinSide);
     dispatch(setPlayedGames({ ...playedGames, '/gamecoin': true }));
+    localStorage.setItem('playedGames', JSON.stringify({ ...playedGames, '/gamecoin': true }));
+    console.log("Played Games:", playedGames);
   };
   
   const handleBackClick = () => {

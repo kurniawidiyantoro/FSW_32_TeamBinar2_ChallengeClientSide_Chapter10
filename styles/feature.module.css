@@ -6,6 +6,33 @@
     height: 100vh;
 }
 
+.LeaderboardPageImage{
+  background-image: url("../assets/images/rock-paper-scissor.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.GamecoinPageImage{
+  background-image: url("../assets/images/coin.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.GamedicePageImage{
+  background-image: url("../assets/images/dadu.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .featureTitle {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     color: #9e9393;  
@@ -78,6 +105,11 @@
 
 .tableStyle{
   width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px; 
 }
 
   @media (min-width: 768px) {

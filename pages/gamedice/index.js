@@ -26,6 +26,7 @@ function Dices() {
   // const navigate = useNavigate();
 
   let diceImages = [dice1, dice2, dice3, dice4, dice5, dice6];
+  console.log(diceImages)
 
   const roll = () => {
     // Generate random number

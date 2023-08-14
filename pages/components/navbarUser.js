@@ -14,10 +14,10 @@ function NavbarUser({ userEmail, totalScore }) {
     <div>
       <Navbar color="dark" dark expand="md">
         <NavItem>
-        <NavbarBrand className="ps-3">{`Welcome, ${userEmail}`}
-        {totalScore !== undefined && (
+        <NavbarBrand className="ps-3">{`Welcome ${userEmail}`}
+        {/* {totalScore !== undefined && (
           <span className="ps-2">Total Score: {totalScore}</span>
-        )}
+        )} */}
         </NavbarBrand>
         </NavItem>
         

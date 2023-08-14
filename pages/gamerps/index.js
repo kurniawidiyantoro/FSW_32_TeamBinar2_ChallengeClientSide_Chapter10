@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import batuImage from '../../assets/images/batu.png';
 // import kertasImage from '../../assets/images/kertas.png';
 // import guntingImage from '../../assets/images/gunting.png';
+import { Spin } from 'antd';
 
 function Game() {
   // const navigate = useNavigate();
@@ -20,6 +21,7 @@ function Game() {
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const playedGames = useSelector(state => state.reducer.playedGames);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleBackClick = () => {
     // navigate('/gamelist');
@@ -117,7 +119,16 @@ function Game() {
   };
 
   useEffect(() => {
-    checkToken();
+    async function fetchData() {
+      try {
+        await checkToken();
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
   }, []);
 
   return (
@@ -128,13 +139,20 @@ function Game() {
         </Button>
       </div>
       <section className={styles.game}>
-      <div className={styles.Container}>
-          <div className={styles.title}>Rock Paper Scissors</div>
-          <div className={styles.status}>Status Last Round: {status}</div>
-          <div className={styles.status}>Current Round: {round + 1}</div>
-          <div className={styles.status}>Total Scores: {totalscore}</div>
-        </div>
-
+        
+      <div className={styles.title}>Rock Paper Scissors</div>
+        {isLoading ? (
+          <div className={styles.spinnerContainer}>
+            <div className={styles.status}>Loading</div>
+            <Spin size="large" /> 
+          </div>
+        ) : (
+          <div className={styles.Container}>
+            <div className={styles.status}>Status Last Round: {status}</div>
+            <div className={styles.status}>Current Round: {round + 1}</div>
+            <div className={styles.status}>Total Scores: {totalscore}</div>
+          </div>
+        )}
         <div className={styles.gridContainer}>
         <div className={`${styles.gridItem} ${styles.options}`}>
             <h1 className={styles.move}>Choose your move</h1>
