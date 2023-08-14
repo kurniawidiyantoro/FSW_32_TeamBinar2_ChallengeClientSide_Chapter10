@@ -29,10 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/gamelist.js"
     ],
-    "/leaderboard": [
+    "/leaderboard/gamecoin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/leaderboard.js"
+      "static/chunks/pages/leaderboard/gamecoin.js"
     ]
   },
   "ampFirstPages": []

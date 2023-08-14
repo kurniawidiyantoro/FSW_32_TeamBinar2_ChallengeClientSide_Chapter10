@@ -57,12 +57,9 @@ const GameList = ({ isLoggedIn, user, playedGames }) => {
     const email = localStorage.getItem('email');
     dispatch(setEmail(email));
     checkToken();
-
-
-
-    
-    
-  }, []);
+    const playedGames = JSON.parse(localStorage.getItem('playedGames')) || {};
+    dispatch(setPlayedGames(playedGames));
+    }, []);
 
   const handleClick = (path) => {
     setLoading(true); 
